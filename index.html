@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluxogramas | Enunciados 1 e 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #65A23A;
+    --verde-escuro: #4E8229;
+    --cinza: #6F6F6F;
+    --cinza-texto: #4A4A4A;
+    --tinta: #1E1E1E;
+    --fundo: #FFFFFF;
+    --fundo-suave: #F6F7FB;
+    --sombra: 0 18px 45px rgba(120, 120, 190, 0.18);
+    --sombra-pill: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+    color: var(--cinza-texto);
+    background: var(--fundo);
+    line-height: 1.6;
+  }
+
+  /* ---------- Cabeçalho ---------- */
+  header {
+    background: var(--fundo);
+    border-bottom: 4px solid var(--verde);
+  }
+  .topo {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .marca { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .pontos { display: grid; grid-template-columns: repeat(3, 12px); gap: 5px; }
+  .pontos span { width: 12px; height: 12px; border-radius: 50%; background: var(--cinza); }
+  .pontos span.v { background: var(--verde); }
+  .marca strong {
+    font-weight: 800; color: var(--tinta); font-size: 1.05rem; line-height: 1.15;
+  }
+  .marca small { display: block; font-weight: 400; color: var(--cinza); font-size: .8rem; }
+
+  nav { display: flex; gap: 12px; flex-wrap: wrap; }
+  .pill {
+    display: inline-block;
+    padding: 10px 26px;
+    border-radius: 999px;
+    background: var(--fundo);
+    color: var(--verde);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: var(--sombra-pill);
+    transition: background .2s, color .2s;
+  }
+  .pill:hover, .pill:focus-visible { background: var(--verde); color: #fff; }
+  :focus-visible { outline: 3px solid var(--verde-escuro); outline-offset: 3px; }
+
+  /* ---------- Introdução ---------- */
+  .intro {
+    max-width: 900px;
+    margin: 56px auto 8px;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .intro h1 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    font-weight: 800;
+    color: var(--tinta);
+    margin-bottom: 10px;
+  }
+  .intro p { font-weight: 300; font-size: 1.05rem; letter-spacing: .02em; }
+
+  /* ---------- Enunciados ---------- */
+  main { padding: 24px 24px 80px; }
+  .enunciado {
+    max-width: 1200px;
+    margin: 48px auto 0;
+    scroll-margin-top: 20px;
+  }
+  .cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: 960px;
+    margin: 0 auto 22px;
+  }
+  .numero {
+    flex: 0 0 auto;
+    width: 64px; height: 64px;
+    border-radius: 20px;
+    background: var(--fundo);
+    box-shadow: var(--sombra);
+    display: grid; place-items: center;
+    font-size: 1.8rem; font-weight: 800; color: var(--verde);
+  }
+  .cabecalho h2 { font-size: 1.35rem; font-weight: 800; color: var(--tinta); }
+  .cabecalho p { font-weight: 300; font-size: .98rem; }
+
+  .quadro {
+    background: var(--fundo);
+    border-radius: 32px;
+    box-shadow: var(--sombra);
+    padding: 22px;
+    text-align: center;
+  }
+  .quadro button {
+    all: unset;
+    cursor: zoom-in;
+    display: block;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .quadro img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 18px;
+    border: 1px solid #ECECEC;
+  }
+  .dica {
+    margin-top: 14px;
+    font-size: .85rem;
+    color: var(--cinza);
+  }
+  .vazio {
+    padding: 70px 20px;
+    border: 2px dashed #CFCFCF;
+    border-radius: 18px;
+    color: var(--cinza);
+    font-weight: 400;
+  }
+  .vazio code { color: var(--verde-escuro); font-weight: 600; }
+
+  /* ---------- Visualizador (lightbox) ---------- */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(25, 28, 32, 0.92);
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+  }
+  .lightbox.aberto { display: flex; }
+  .lb-barra {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 18px; gap: 12px;
+    color: #fff;
+  }
+  .lb-barra h3 { font-size: 1rem; font-weight: 600; }
+  .lb-acoes { display: flex; gap: 8px; }
+  .lb-acoes button {
+    border: 0; cursor: pointer;
+    background: #fff; color: var(--verde);
+    font: 700 1rem "Montserrat", Arial, sans-serif;
+    min-width: 42px; height: 42px; padding: 0 14px;
+    border-radius: 999px;
+  }
+  .lb-acoes button:hover { background: var(--verde); color: #fff; }
+  .lb-area {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    padding: 10px 18px 24px;
+  }
+  .lb-area img {
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    background: #fff;
+    border-radius: 10px;
+    cursor: zoom-in;
+    transition: width .2s;
+  }
+  .lb-area.zoom img { max-width: none; max-height: none; cursor: zoom-out; }
+
+  footer {
+    text-align: center;
+    padding: 26px;
+    font-size: .85rem;
+    color: var(--cinza);
+    background: var(--fundo-suave);
+  }
+
+  @media (max-width: 640px) {
+    .topo { justify-content: center; }
+    .numero { width: 52px; height: 52px; font-size: 1.4rem; border-radius: 16px; }
+    .quadro { padding: 12px; border-radius: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topo">
+    <a class="marca" href="#">
+      <div class="pontos" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span></span><span class="v"></span><span></span>
+        <span class="v"></span><span></span><span></span>
+      </div>
+      <strong>Fluxogramas<small>Bruno Souza</small></strong>
+    </a>
+    <nav aria-label="Enunciados">
+      <a class="pill" href="#enunciado-1">Enunciado 1</a>
+      <a class="pill" href="#enunciado-2">Enunciado 2</a>
+    </nav>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>Fluxogramas dos enunciados</h1>
+  <p>Clique em um fluxograma para abrir em tela cheia e ampliar os detalhes.</p>
+</section>
+
+<main>
+
+  <!-- ===== ENUNCIADO 1 ===== -->
+  <section class="enunciado" id="enunciado-1">
+    <div class="cabecalho">
+      <div class="numero">1</div>
+      <div>
+        <h2>Enunciado 1</h2>
+        <p>Atualizar a posição do estoque a partir das movimentações (programa batch), incluindo o produto quando não existir e excluindo quando o saldo zerar.</p>
+      </div>
+    </div>
+    <div class="quadro">
+      <button type="button" data-titulo="Enunciado 1" aria-label="Ampliar fluxograma do enunciado 1">
+        <img src="imagens/enunciado-1.png" alt="Fluxograma do enunciado 1: atualização da posição do estoque a partir das movimentações">
+      </button>
+      <p class="dica">Clique na imagem para ampliar</p>
+    </div>
+  </section>
+
+  <!-- ===== ENUNCIADO 2 ===== -->
+  <section class="enunciado" id="enunciado-2">
+    <div class="cabecalho">
+      <div class="numero">2</div>
+      <div>
+        <h2>Enunciado 2</h2>
+        <p>Emitir relatório de duplicatas em aberto, ordenadas por código de cliente, com subtotais por cliente e total geral.</p>
+      </div>
+    </div>
+    <div class="quadro">
+      <button type="button" data-titulo="Enunciado 2" aria-label="Ampliar fluxograma do enunciado 2">
+        <img src="imagens/enunciado-2.png" alt="Fluxograma do enunciado 2: relatório de duplicatas em aberto com subtotal por cliente e total geral">
+      </button>
+      <p class="dica">Clique na imagem para ampliar</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>Bruno Souza | 2026</footer>
+
+<!-- Visualizador -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-titulo">
+  <div class="lb-barra">
+    <h3 id="lb-titulo"></h3>
+    <div class="lb-acoes">
+      <button type="button" id="lb-anterior" aria-label="Anterior">‹</button>
+      <button type="button" id="lb-proximo" aria-label="Próximo">›</button>
+      <button type="button" id="lb-zoom">Ampliar</button>
+      <button type="button" id="lb-fechar" aria-label="Fechar">✕</button>
+    </div>
+  </div>
+  <div class="lb-area" id="lb-area">
+    <img id="lb-img" alt="">
+  </div>
+</div>
+
+<script>
+  const botoes = [...document.querySelectorAll('.quadro button')];
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbArea = document.getElementById('lb-area');
+  const lbTitulo = document.getElementById('lb-titulo');
+  const btZoom = document.getElementById('lb-zoom');
+  let atual = 0;
+
+  // Se a imagem não existir, mostra um aviso no lugar
+  botoes.forEach(b => {
+    const img = b.querySelector('img');
+    const marcarVazio = () => {
+      if (b.dataset.vazio) return;
+      const aviso = document.createElement('div');
+      aviso.className = 'vazio';
+      aviso.innerHTML = 'Imagem não encontrada. Adicione o arquivo <code>' +
+        img.getAttribute('src') + '</code> ao repositório.';
+      b.replaceWith(aviso);
+      b.dataset.vazio = '1';
+    };
+    img.addEventListener('error', marcarVazio);
+    if (img.complete && img.naturalWidth === 0) marcarVazio();
+  });
+
+  const disponiveis = () => botoes.filter(b => !b.dataset.vazio);
+
+  function abrir(botao) {
+    const lista = disponiveis();
+    atual = lista.indexOf(botao);
+    mostrar();
+    lb.classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lb-fechar').focus();
+  }
+  function mostrar() {
+    const lista = disponiveis();
+    const b = lista[atual];
+    const img = b.querySelector('img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbTitulo.textContent = b.dataset.titulo;
+    setZoom(false);
+    const varios = lista.length > 1;
+    document.getElementById('lb-anterior').style.display = varios ? '' : 'none';
+    document.getElementById('lb-proximo').style.display = varios ? '' : 'none';
+  }
+  function fechar() {
+    lb.classList.remove('aberto');
+    document.body.style.overflow = '';
+    const b = disponiveis()[atual];
+    if (b) b.focus();
+  }
+  function setZoom(on) {
+    lbArea.classList.toggle('zoom', on);
+    btZoom.textContent = on ? 'Ajustar' : 'Ampliar';
+  }
+  function navegar(passo) {
+    const n = disponiveis().length;
+    atual = (atual + passo + n) % n;
+    mostrar();
+  }
+
+  botoes.forEach(b => b.addEventListener('click', () => abrir(b)));
+  document.getElementById('lb-fechar').onclick = fechar;
+  document.getElementById('lb-anterior').onclick = () => navegar(-1);
+  document.getElementById('lb-proximo').onclick = () => navegar(1);
+  btZoom.onclick = () => setZoom(!lbArea.classList.contains('zoom'));
+  lbImg.addEventListener('click', e => { e.stopPropagation(); setZoom(!lbArea.classList.contains('zoom')); });
+  lbArea.addEventListener('click', e => { if (e.target === lbArea) fechar(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('aberto')) return;
+    if (e.key === 'Escape') fechar();
+    if (e.key === 'ArrowRight') navegar(1);
+    if (e.key === 'ArrowLeft') navegar(-1);
+  });
+</script>
+</body>
+</html>
