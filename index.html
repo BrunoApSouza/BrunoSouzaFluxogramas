@@ -185,6 +185,7 @@
   }
   .lb-area.zoom img { max-width: none; max-height: none; cursor: zoom-out; }
 
+
   footer {
     text-align: center;
     padding: 26px;
@@ -194,6 +195,7 @@
   }
 
   @media (max-width: 640px) {
+    .cabecalho { flex-wrap: wrap; }
     .topo { justify-content: center; }
     .numero { width: 52px; height: 52px; font-size: 1.4rem; border-radius: 16px; }
     .quadro { padding: 12px; border-radius: 22px; }
@@ -219,6 +221,7 @@
     <nav aria-label="Enunciados">
       <a class="pill" href="#enunciado-1">Enunciado 1</a>
       <a class="pill" href="#enunciado-2">Enunciado 2</a>
+      <a class="pill" href="docs/sql.pdf" target="_blank" rel="noopener">SQL</a>
     </nav>
   </div>
 </header>
@@ -267,6 +270,7 @@
 </main>
 
 <footer>Bruno Souza | 2026</footer>
+
 
 <!-- Visualizador -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-titulo">
@@ -360,6 +364,7 @@
     if (e.key === 'ArrowRight') navegar(1);
     if (e.key === 'ArrowLeft') navegar(-1);
   });
+
 </script>
 </body>
 </html>
